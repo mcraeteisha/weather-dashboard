@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+     <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Weather Dashboard</title>
+  </head>
+
+  <body>
+      <header>
+        <nav class="white">
+          <div class="nav-wrapper">
+              <a href="#" class="brand-logo center black-text">Weather <strong>Dashboard</strong></a>
+          </div> 
+        </nav>
+      </header>
+      <div class="row">
+
+        <div class="col s3 indigo darken-4">
+          <h5 class="white-text">Search for a City:</h5>
+            <div class="row">
+              <div class="col s8 white-text">
+                <input id="weather-search-term" type="text" placeholder="City" class="white-text">
+              </div>
+              <div class="col s4">
+                <button type="submit" class="indigo darken-4" id="search-btn"><a href="#"><i class="material-icons white-text" id="search-icon">search</i></a></button>
+              </div>
+            </div>
+        </div>
+
+        <div class="col s9">
+          <div class="col s12 m7">
+            <div class="card horizontal">
+              <div class="card-stacked">
+                <div class="card-content">
+                  <p id="weather-info">Placeholder text</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    </div>
+      
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
