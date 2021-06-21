@@ -1,17 +1,17 @@
 var citySearchEl = document.querySelector('#city-search');
-var weatherInfoEl = document.querySelector('#weather-info');
-var cityName = document.getElementById('#weather-search-term').value;
 var searchBtn = document.querySelector('#search-btn');
-var weatherIconEl = document.getElementById('icon-placeholder');
+var cityName = document.getElementById('weather-search-term');
+var weatherIconEl = document.getElementById('icon-placeholder')
+var weatherInfoEl = document.querySelector('#weather-info');
 
 function handleSearch() {
   getCurrentWeather(cityName)
 }
 
-var getCurrentWeather = function (cityName) {
-  console.log(cityName);
-  var apiUrl = 'http://api.openweathermap.org/data/2.5/forecast?q=' + cityName.value + '&appid=90c196e218aeae618fd443494f7e9524';
 
+function getCurrentWeather(cityName) {
+  console.log(cityName.value);
+  var apiUrl = "http://api.openweathermap.org/data/2.5/forecast?q=" + cityName.value + "&appid=90c196e218aeae618fd443494f7e9524";
   fetch(apiUrl)
     .then(function(response) {
         return response.json();
@@ -22,9 +22,11 @@ var getCurrentWeather = function (cityName) {
         })
 };
 
+
 function renderWeather(data) {
   var today = moment();
-  document.querySelector('#weather-info').textContent = cityName.value + ' | ' + today.format("MMM Do, YYYY") + img;
+  weatherInfoEl.textContent = cityName.value + ' | ' + today.format("MMM Do, YYYY");
+  weatherIconEl = createWeatherIcon();
 }
 
 function createWeatherIcon(data) {
@@ -37,33 +39,34 @@ function createWeatherIcon(data) {
 
 
 
-
 searchBtn.addEventListener('click', handleSearch);
 
 
-// var displayCurrentWeather = function (weatherData, searchTerm) {
-//   if (weatherData.length === 0) {
-//     weatherInfoEl.textContent = 'Weather unavailable for selected city.';
-//     return;
-//   }
 
-//   weatherSearchTerm.textContent = searchTerm;
 
-//     var repoName = repos[i].owner.login + '/' + repos[i].name;
+/*var displayCurrentWeather = function (weatherData, searchTerm) {
+  if (weatherData.length === 0) {
+    weatherInfoEl.textContent = 'Weather unavailable for selected city.';
+    return;
+  }
 
-//     var repoEl = document.createElement('a');
-//     repoEl.classList = 'list-item flex-row justify-space-between align-center';
-//     repoEl.setAttribute('href', './single-repo.html?repo=' + repoName);
+  weatherSearchTerm.textContent = searchTerm;
 
-//     var titleEl = document.createElement('span');
-//     titleEl.textContent = repoName;
+    var repoName = repos[i].owner.login + '/' + repos[i].name;
 
-//     repoEl.appendChild(titleEl);
+    var repoEl = document.createElement('a');
+    repoEl.classList = 'list-item flex-row justify-space-between align-center';
+    repoEl.setAttribute('href', './single-repo.html?repo=' + repoName);
 
-//     var statusEl = document.createElement('span');
-//     statusEl.classList = 'flex-row align-center';
+    var titleEl = document.createElement('span');
+    titleEl.textContent = repoName;
 
-//     repoEl.appendChild(statusEl);
+    repoEl.appendChild(titleEl);
 
-//     repoContainerEl.appendChild(repoEl);
-// };
+    var statusEl = document.createElement('span');
+    statusEl.classList = 'flex-row align-center';
+
+    repoEl.appendChild(statusEl);
+
+    repoContainerEl.appendChild(repoEl);
+};*/
