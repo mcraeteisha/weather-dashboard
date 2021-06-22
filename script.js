@@ -1,14 +1,22 @@
 var citySearchEl = document.querySelector('#city-search');
 var searchBtn = document.querySelector('#search-btn');
 var cityName = document.getElementById('weather-search-term');
+
+//Weather elements to display to page
 var weatherIconEl = document.getElementById('icon-placeholder')
 var weatherInfoEl = document.querySelector('#weather-info');
+var temperatureInfoEl = document.querySelector('#temperature-info');
+var humidityInfoEl = document.querySelector('#humidity-info');
+var windSpeedInfoEl = document.querySelector('#wind-speed-info');
+var uvIndexInfoEl = document.querySelector('#uv-index-info');
 
+
+//Handle Search gets current weather for searched city
 function handleSearch() {
   getCurrentWeather(cityName)
 }
 
-
+//Get current weather for the searched city via the API, render weather data to the page
 function getCurrentWeather(cityName) {
   console.log(cityName.value);
   var apiUrl = "http://api.openweathermap.org/data/2.5/forecast?q=" + cityName.value + "&appid=90c196e218aeae618fd443494f7e9524";
@@ -22,11 +30,11 @@ function getCurrentWeather(cityName) {
         })
 };
 
-
+//Function to render weather data to the page
 function renderWeather(data) {
   var today = moment();
   weatherInfoEl.textContent = cityName.value + ' | ' + today.format("MMM Do, YYYY");
-  weatherIconEl = createWeatherIcon();
+  temperatureInfoEl.textContent = 'Temperature: ' + Math.round(((data.list[0].main.temp-273.15)*1.8)+32) + '\u00B0' + 'F';
 }
 
 function createWeatherIcon(data) {
