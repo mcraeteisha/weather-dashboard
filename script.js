@@ -9,6 +9,7 @@ var temperatureInfoEl = document.querySelector('#temperature-info');
 var humidityInfoEl = document.querySelector('#humidity-info');
 var windSpeedInfoEl = document.querySelector('#wind-speed-info');
 var uvIndexInfoEl = document.querySelector('#uv-index-info');
+var weatherIcon;
 
 
 //Handle Search gets current weather for searched city
@@ -27,22 +28,32 @@ function getCurrentWeather(cityName) {
         .then(function(data) {
           console.log(data);
           renderWeather(data);
+          createWeatherIcon(data);
         })
 };
+
+
+function createWeatherIcon(data) {
+  var weatherIcon = data.list[0].weather[0].icon;
+  var iconURL = "https://openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
+  // var img = document.createElement('img');
+  // // img.src = iconURL;
+  // console.log(img.src)
+  console.log(weatherIcon);
+  console.log(iconURL);
+  weatherIconEl.innerHTML = '<img src='+iconURL+'>';
+}
 
 //Function to render weather data to the page
 function renderWeather(data) {
   var today = moment();
   weatherInfoEl.textContent = cityName.value + ' | ' + today.format("MMM Do, YYYY");
   temperatureInfoEl.textContent = 'Temperature: ' + Math.round(((data.list[0].main.temp-273.15)*1.8)+32) + '\u00B0' + 'F';
+  humidityInfoEl.textContent = 'Humidity: ' + data.list[0].main.humidity + '%';
+  windSpeedInfoEl.textContent = 'Wind Speed: ' + data.list[0].wind.speed + ' MPH';
 }
 
-function createWeatherIcon(data) {
-  var weatherIcon = data.list[0].weather[0].icon;
-  var iconURL = "https://openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
-  var img = document.createElement('img');
-  img.src = "https://openweathermap.org/img/wn/" + weatherIcon + "@2x.png"
-}
+
 
 
 
