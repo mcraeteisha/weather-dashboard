@@ -5,8 +5,8 @@ A weather dashboard that features dynamically updated HTML and CSS. Created usin
 [Weather Dashboard](xx)
 
 ## User Story
-As a develop who writes about tech
-* I want a CMS-style blog site where I can publish articles, blog posts, and my thoughts and opinions.
+As a traveler:
+* I want to see the weather outlook for multiple cities so that I can plan a trip accordingly
 
 ## Technologies Used
 * HTML
