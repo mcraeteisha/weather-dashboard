@@ -2,7 +2,7 @@ var citySearchEl = document.querySelector('#city-search');
 var searchBtn = document.querySelector('#search-btn');
 var cityName = document.getElementById('weather-search-term');
 
-//Weather elements to display to page
+//Current weather elements to display to page
 var weatherIconEl = document.getElementById('icon-placeholder')
 var weatherInfoEl = document.querySelector('#weather-info');
 var temperatureInfoEl = document.querySelector('#temperature-info');
@@ -10,6 +10,13 @@ var humidityInfoEl = document.querySelector('#humidity-info');
 var windSpeedInfoEl = document.querySelector('#wind-speed-info');
 var uvIndexInfoEl = document.querySelector('#uv-index-info');
 var weatherIcon;
+
+//5-Day forecast elements to display to page
+var forecastTitleEl = document.querySelector('forecast-title-placeholder');
+var forecastDateEl = document.querySelector('date-placeholder');
+var forecastTempEl = document.querySelector('forecast-temp-placeholder');
+var forecastIconEl = document.querySelector('forecast-icon-placeholder');
+var forecastHumidityEl = document.querySelector('forecast-humidity-placeholder');
 
 
 //Handle Search gets current weather for searched city
@@ -28,7 +35,8 @@ function getCurrentWeather(cityName) {
         .then(function(data) {
           console.log(data);
           renderWeather(data);
-          createWeatherIcon(data);
+          renderForecast(data);
+          // createWeatherIcon(data);
         })
 };
 
@@ -51,6 +59,18 @@ function renderWeather(data) {
   temperatureInfoEl.textContent = 'Temperature: ' + Math.round(((data.list[0].main.temp-273.15)*1.8)+32) + '\u00B0' + 'F';
   humidityInfoEl.textContent = 'Humidity: ' + data.list[0].main.humidity + '%';
   windSpeedInfoEl.textContent = 'Wind Speed: ' + data.list[0].wind.speed + ' MPH';
+}
+
+//Function to render 5-day forecast to the page
+function renderForecast(data) {
+  //UPDATE THIS FOR LOOP. NOT WORKING
+  // var forecast = data.list;
+  // for(var i=5; i < data.length; i=i+8) {
+  //   var fiveDayForecast = forecast [i];
+    forecastTitleEl.textContent= '5-Day Forecast:';
+    forecastDateEl.textContent = today.format("MMM Do, YYYY");
+    forecastTempEl.textContent = 'Temperature: ' + Math.round(((data.list[i].main.temp-273.15)*1.8)+32) + '\u00B0' + 'F';
+    forecastHumidityEl.textContent = 'Humidity: ' + data.list[i].main.humidity + '%';
 }
 
 
