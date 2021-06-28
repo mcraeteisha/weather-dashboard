@@ -68,11 +68,13 @@ function getForecastWeather(cityName) {
 
 //Function to render weather data to the page
 function renderWeather(data) {
+//If no results for selected city, display error message for user.
   if (data.cod == "404") {
     weatherInfoEl.textContent = 'Weather unavailable for selected city.';
     return;
   }
 
+//Generate weather icon image and render to page
   var weatherIcon = data.weather[0].icon;
   var iconURL = "https://openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
   var img = document.createElement('img');
@@ -84,6 +86,7 @@ function renderWeather(data) {
   removeWeatherIcon();
   weatherIconEl.append(img);
 
+//Render current weather information to page
   var today = moment();
   weatherInfoEl.textContent = cityName.value + ' | ' + today.format("MMM Do, YYYY");
   temperatureInfoEl.textContent = 'Temperature: ' + Math.round(((data.main.temp-273.15)*1.8)+32) + '\u00B0' + 'F';
@@ -91,7 +94,7 @@ function renderWeather(data) {
   windSpeedInfoEl.textContent = 'Wind Speed: ' + data.wind.speed + ' MPH';
 }
 
-
+//Removes weather icon from page so that new weather icon appears with new search
 function removeWeatherIcon() {
   $('#icon-placeholder').empty();
 }
@@ -105,10 +108,7 @@ searchBtn.addEventListener('click', handleSearch);
 
 
 /*var displayCurrentWeather = function (weatherData, searchTerm) {
-  if (weatherData.length === 0) {
-    weatherInfoEl.textContent = 'Weather unavailable for selected city.';
-    return;
-  }
+
 
   weatherSearchTerm.textContent = searchTerm;
 
