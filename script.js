@@ -65,21 +65,14 @@ function getForecastWeather(cityName) {
 //   weatherIconEl.innerHTML = '<img src='+iconURL+'>';
 // }
 
-//Function to render 5-day forecast to the page
-function renderForecast(data) {
-  forecastTitleEl.textContent = '5-Day Forecast:';
-  var forecastDate = moment();
-  var forecast = data.list;
-  for(var i=0; i < 5; i++) {
-    console.log(forecast[i]);
-    forecastDateEl.textContent = forecastDate.add(1, "days").format("MMM Do, YYYY");
-    forecastTempEl.textContent = 'Temperature: ' + Math.round(((data.list[i].main.temp-273.15)*1.8)+32) + '\u00B0' + 'F';
-    forecastHumidityEl.textContent = 'Humidity: ' + data.list[i].main.humidity + '%';
-}
-}
 
 //Function to render weather data to the page
 function renderWeather(data) {
+  if (data.cod == "404") {
+    weatherInfoEl.textContent = 'Weather unavailable for selected city.';
+    return;
+  }
+
   var weatherIcon = data.weather[0].icon;
   var iconURL = "https://openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
   var img = document.createElement('img');
