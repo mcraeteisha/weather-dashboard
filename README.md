@@ -26,11 +26,10 @@ Using VS Code, the [OpenWeather API](https://openweathermap.org/api), Materializ
  
 ## Learnings and Issues
 Some of the learnings I'm taking away from this project are:
-1. The biggest issue I had with this project was getting the weather icon image to display to the page. I was able to successfully pull the image from the API data and create an image URL for it (I logged the image URL to the console and was sent to the correct image upon clicking). However, I was unable to get it to render to the page.
+1. The biggest issue I had with this project was getting the weather icon image to display to the page. I was able to successfully pull the image from the API data and create an image URL for it (I logged the image URL to the console and was sent to the correct image upon clicking). Initially, I was attempting to add the image to the HTML page as innerHTML content. I was also using a span tag, which I changed to a p tag. Once I appended the image to the p tag element, I was able to get it to successfully append to the page.
 2. Unfortunately, the UV Index API had been deprecated when I completed this project, so I was not able to add that feature to my weather information. 
 
 ## Future Application Updates
-* Add the weather icon image to weather information. 
 * Make UI more sleek and responsive.
  
 ## Contributors
