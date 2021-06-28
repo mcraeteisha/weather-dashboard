@@ -12,20 +12,36 @@ var uvIndexInfoEl = document.querySelector('#uv-index-info');
 var weatherIcon;
 
 //5-Day forecast elements to display to page
-var forecastTitleEl = document.querySelector('forecast-title-placeholder');
-var forecastDateEl = document.querySelector('date-placeholder');
-var forecastTempEl = document.querySelector('forecast-temp-placeholder');
-var forecastIconEl = document.querySelector('forecast-icon-placeholder');
-var forecastHumidityEl = document.querySelector('forecast-humidity-placeholder');
+var forecastTitleEl = document.getElementById('forecast-title-placeholder');
+var forecastDateEl = document.getElementById('date-placeholder');
+var forecastTempEl = document.getElementById('forecast-temp-placeholder');
+var forecastIconEl = document.getElementById('forecast-icon-placeholder');
+var forecastHumidityEl = document.getElementById('forecast-humidity-placeholder');
 
 
 //Handle Search gets current weather for searched city
 function handleSearch() {
-  getCurrentWeather(cityName)
+  getCurrentWeather(cityName);
+  getForecastWeather(cityName);
 }
 
 //Get current weather for the searched city via the API, render weather data to the page
 function getCurrentWeather(cityName) {
+  console.log(cityName.value);
+  var apiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName.value + "&appid=90c196e218aeae618fd443494f7e9524";
+  fetch(apiUrl)
+    .then(function(response) {
+        return response.json();
+      })
+        .then(function(data) {
+          console.log(data);
+          renderWeather(data);
+          // // renderForecast(data);
+          // createWeatherIcon(data);
+        })
+};
+
+function getForecastWeather(cityName) {
   console.log(cityName.value);
   var apiUrl = "http://api.openweathermap.org/data/2.5/forecast?q=" + cityName.value + "&appid=90c196e218aeae618fd443494f7e9524";
   fetch(apiUrl)
@@ -34,46 +50,58 @@ function getCurrentWeather(cityName) {
       })
         .then(function(data) {
           console.log(data);
-          renderWeather(data);
           renderForecast(data);
-          // createWeatherIcon(data);
         })
 };
 
+// function createWeatherIcon(data) {
+//   var weatherIcon = data.weather[0].icon;
+//   var iconURL = "https://openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
+//   // var img = document.createElement('img');
+//   // // img.src = iconURL;
+//   // console.log(img.src)
+//   console.log(weatherIcon);
+//   console.log(iconURL);
+//   weatherIconEl.innerHTML = '<img src='+iconURL+'>';
+// }
 
-function createWeatherIcon(data) {
-  var weatherIcon = data.list[0].weather[0].icon;
-  var iconURL = "https://openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
-  // var img = document.createElement('img');
-  // // img.src = iconURL;
-  // console.log(img.src)
-  console.log(weatherIcon);
-  console.log(iconURL);
-  weatherIconEl.innerHTML = '<img src='+iconURL+'>';
+//Function to render 5-day forecast to the page
+function renderForecast(data) {
+  forecastTitleEl.textContent = '5-Day Forecast:';
+  var forecastDate = moment();
+  var forecast = data.list;
+  for(var i=0; i < 5; i++) {
+    console.log(forecast[i]);
+    forecastDateEl.textContent = forecastDate.add(1, "days").format("MMM Do, YYYY");
+    forecastTempEl.textContent = 'Temperature: ' + Math.round(((data.list[i].main.temp-273.15)*1.8)+32) + '\u00B0' + 'F';
+    forecastHumidityEl.textContent = 'Humidity: ' + data.list[i].main.humidity + '%';
+}
 }
 
 //Function to render weather data to the page
 function renderWeather(data) {
+  var weatherIcon = data.weather[0].icon;
+  var iconURL = "https://openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
+  var img = document.createElement('img');
+  img.src = iconURL;
+  console.log(img.src)
+  console.log(weatherIcon);
+  console.log(img);
+  // weatherIconEl.append(img);
+  removeWeatherIcon();
+  weatherIconEl.append(img);
+
   var today = moment();
   weatherInfoEl.textContent = cityName.value + ' | ' + today.format("MMM Do, YYYY");
-  temperatureInfoEl.textContent = 'Temperature: ' + Math.round(((data.list[0].main.temp-273.15)*1.8)+32) + '\u00B0' + 'F';
-  humidityInfoEl.textContent = 'Humidity: ' + data.list[0].main.humidity + '%';
-  windSpeedInfoEl.textContent = 'Wind Speed: ' + data.list[0].wind.speed + ' MPH';
-}
-
-//Function to render 5-day forecast to the page
-function renderForecast(data) {
-  //UPDATE THIS FOR LOOP. NOT WORKING
-  // var forecast = data.list;
-  // for(var i=5; i < data.length; i=i+8) {
-  //   var fiveDayForecast = forecast [i];
-    forecastTitleEl.textContent= '5-Day Forecast:';
-    forecastDateEl.textContent = today.format("MMM Do, YYYY");
-    forecastTempEl.textContent = 'Temperature: ' + Math.round(((data.list[i].main.temp-273.15)*1.8)+32) + '\u00B0' + 'F';
-    forecastHumidityEl.textContent = 'Humidity: ' + data.list[i].main.humidity + '%';
+  temperatureInfoEl.textContent = 'Temperature: ' + Math.round(((data.main.temp-273.15)*1.8)+32) + '\u00B0' + 'F';
+  humidityInfoEl.textContent = 'Humidity: ' + data.main.humidity + '%';
+  windSpeedInfoEl.textContent = 'Wind Speed: ' + data.wind.speed + ' MPH';
 }
 
 
+function removeWeatherIcon() {
+  $('#icon-placeholder').empty();
+}
 
 
 
