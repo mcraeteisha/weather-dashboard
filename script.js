@@ -18,11 +18,19 @@ var forecastTempEl = document.getElementById('forecast-temp-placeholder');
 var forecastIconEl = document.getElementById('forecast-icon-placeholder');
 var forecastHumidityEl = document.getElementById('forecast-humidity-placeholder');
 
+//Search History elements to display to page and save to local storage
+var searchHistoryEl = document.getElementById('search-history-info');
+var historicalSearchButton = document.getElementById('historical-data-search-button')
+var searchedCities = [];
+var savedCity = cityName;
 
 //Handle Search gets current weather for searched city
 function handleSearch() {
   getCurrentWeather(cityName);
   getForecastWeather(cityName);
+  searchedCities.unshift({cityName});
+  saveCitySearch(cityName);
+  searchHistoricalData(cityName);
 }
 
 //Get current weather for the searched city via the API, render weather data to the page
@@ -54,18 +62,6 @@ function getForecastWeather(cityName) {
         })
 };
 
-// function createWeatherIcon(data) {
-//   var weatherIcon = data.weather[0].icon;
-//   var iconURL = "https://openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
-//   // var img = document.createElement('img');
-//   // // img.src = iconURL;
-//   // console.log(img.src)
-//   console.log(weatherIcon);
-//   console.log(iconURL);
-//   weatherIconEl.innerHTML = '<img src='+iconURL+'>';
-// }
-
-
 //Function to render weather data to the page
 function renderWeather(data) {
 //If no results for selected city, display error message for user.
@@ -94,15 +90,52 @@ function renderWeather(data) {
   windSpeedInfoEl.textContent = 'Wind Speed: ' + data.wind.speed + ' MPH';
 }
 
+//Function to render 5-day forecast to the page
+function renderForecast(data) {
+  forecastTitleEl.textContent = '5-Day Forecast:';
+  var forecastDate = moment();
+  var forecast = data.list;
+  for(var i=0; i < 5; i++) {
+    console.log(forecast[i]);
+    forecastDateEl.textContent = forecastDate.add(1, "days").format("MMM Do, YYYY");
+    forecastTempEl.textContent = 'Temperature: ' + Math.round(((data.list[i].main.temp-273.15)*1.8)+32) + '\u00B0' + 'F';
+    forecastHumidityEl.textContent = 'Humidity: ' + data.list[i].main.humidity + '%';
+}
+}
+
 //Removes weather icon from page so that new weather icon appears with new search
 function removeWeatherIcon() {
   $('#icon-placeholder').empty();
 }
 
 
+function saveCitySearch (searchedCities) {
+  localStorage.setItem("searchedCities", JSON.stringify(searchedCities));
+}
+
+
+var searchHistoricalData = function(searchHistoricalData) {
+  searchHistoryEl = document.createElement("button");
+  searchHistoryEl.textContent = searchHistoricalData.value;
+  searchHistoryEl.setAttribute("city-data", searchHistoricalData);
+  searchHistoryEl.setAttribute("type", "submit");
+
+  historicalSearchButton.prepend(searchHistoryEl);
+}
+
+function historicalSearchHandler (event) {
+  var city = event.target.getAttribute("city-data");
+  if(city) {
+    getCurrentWeather(city);
+    getForecastWeather(city);
+  }
+}
+
 
 
 searchBtn.addEventListener('click', handleSearch);
+
+historicalSearchButton.addEventListener('click', historicalSearchHandler);
 
 
 
