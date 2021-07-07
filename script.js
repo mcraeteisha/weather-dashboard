@@ -95,7 +95,7 @@ function renderForecast(data) {
   forecastTitleEl.textContent = '5-Day Forecast:';
   var forecastDate = moment();
   var forecast = data.list;
-  for(var i=0; i < 5; i++) {
+  for(var i=5; i < forecast.length; i++) {
     console.log(forecast[i]);
     forecastDateEl.textContent = forecastDate.add(1, "days").format("MMM Do, YYYY");
     forecastTempEl.textContent = 'Temperature: ' + Math.round(((data.list[i].main.temp-273.15)*1.8)+32) + '\u00B0' + 'F';
@@ -109,7 +109,7 @@ function removeWeatherIcon() {
 }
 
 
-function saveCitySearch (searchedCities) {
+function saveCitySearch () {
   localStorage.setItem("searchedCities", JSON.stringify(searchedCities));
 }
 
@@ -117,21 +117,19 @@ function saveCitySearch (searchedCities) {
 var searchHistoricalData = function(searchHistoricalData) {
   searchHistoryEl = document.createElement("button");
   searchHistoryEl.textContent = searchHistoricalData.value;
-  searchHistoryEl.setAttribute("city-data", searchHistoricalData);
+  searchHistoryEl.setAttribute("cityData", searchHistoricalData.value);
   searchHistoryEl.setAttribute("type", "submit");
 
   historicalSearchButton.prepend(searchHistoryEl);
 }
 
 function historicalSearchHandler (event) {
-  var city = event.target.getAttribute("city-data");
+  var city = event.target.getAttribute("cityData");
   if(city) {
     getCurrentWeather(city);
     getForecastWeather(city);
   }
 }
-
-
 
 searchBtn.addEventListener('click', handleSearch);
 
