@@ -2,7 +2,7 @@
 A weather dashboard that features dynamically updated HTML and CSS. Created using the OpenWeather API to retrieve weather data for cities. 
 
 ## Link to Deployed Application
-[Weather Dashboard](xx)
+[Weather Dashboard](https://mcraeteisha.github.io/weather-dashboard/)
 
 ## User Story
 As a traveler:
@@ -30,12 +30,12 @@ Some of the learnings I'm taking away from this project are:
 2. Unfortunately, the UV Index API had been deprecated when I completed this project, so I was not able to add that feature to my weather information. 
 
 ## Future Application Updates
-* Make UI more sleek and responsive.
+* Fix 5-Day Forecast Display (currently displays one day of the week)
+* Fix function for viewing Current Temps and Forecast for previously searched cities. Currently, clicking on the buttons in the Search History does nothing.
  
 ## Contributors
 Teisha McRae
 
-![Website Screenshot](xx)
-![Website Screenshot](xx)
+![Website Screenshot](https://user-images.githubusercontent.com/73713665/124681965-b69b6f80-de97-11eb-8614-4592e136da8f.png)
 
 
